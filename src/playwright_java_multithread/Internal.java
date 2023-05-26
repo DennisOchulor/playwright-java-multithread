@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target({ TYPE, METHOD, CONSTRUCTOR })
 /**
  * 
- * Anything annotated with this annotation is intended only for **internal use**.
+ * Anything annotated with this annotation is intended only for <b>**internal use**</b> only.
  * Users are highly discouraged from directly using these internal components outside their packages.
  *
  */

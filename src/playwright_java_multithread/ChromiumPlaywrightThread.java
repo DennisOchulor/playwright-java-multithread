@@ -5,6 +5,7 @@ import com.microsoft.playwright.BrowserType.LaunchOptions;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Playwright.CreateOptions;
 
+@Internal
 final class ChromiumPlaywrightThread extends InternalPlaywrightThread {
 
 	public ChromiumPlaywrightThread(Runnable r, CreateOptions createOptions, LaunchOptions launchOptions) {

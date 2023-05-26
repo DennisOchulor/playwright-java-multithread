@@ -16,8 +16,8 @@ final class InternalPlaywrightThreadFactory implements ThreadFactory {
 
 	InternalPlaywrightThreadFactory(Class<? extends InternalPlaywrightThread> clazz,CreateOptions createOptions,LaunchOptions launchOptions) {
 		this.clazz = Objects.requireNonNull(clazz);
-		this.createOptions = createOptions;
-		this.launchOptions = launchOptions;
+		this.createOptions = Objects.requireNonNull(createOptions);
+		this.launchOptions = Objects.requireNonNull(launchOptions);
 	}
 
 	@Override

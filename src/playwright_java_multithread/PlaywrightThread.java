@@ -7,6 +7,14 @@ import com.microsoft.playwright.BrowserType.LaunchOptions;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.Playwright.CreateOptions;
 
+/**
+ * 
+ * This abstract class is a subclass of {@link Thread} that wraps {@link Playwright} and {@link Browser} directly onto a thread 
+ * with the purpose of making it easier to multithread with Playwright as it is not thread-safe.
+ * 
+ * @see <a href="https://playwright.dev/java/docs/multithreading">Multithreading with Playwright</a>
+ *
+ */
 public abstract class PlaywrightThread extends Thread {
 	
 	private final Playwright playwright;
@@ -15,6 +23,12 @@ public abstract class PlaywrightThread extends Thread {
 	private final Browser webkit;
 	private Runnable r;
 	
+	/**
+	 * This method is invoked each time a new instance of this {@link PlaywrightThread} is created. 
+	 * @return the user-defined PlaywrightThreadInitPackage
+	 * @see PlaywrightThreadInitPackage
+	 * @see PlaywrightThreadInitPackage#PlaywrightThreadInitPackage(Playwright, Browser, Browser, Browser)
+	 */
 	protected abstract PlaywrightThreadInitPackage init();
 	
 	@Internal
@@ -22,6 +36,10 @@ public abstract class PlaywrightThread extends Thread {
 		throw new UnsupportedOperationException(); // to be overriden by internal classes
 	}
 
+	/**
+	 * Constructs a new {@link PlaywrightThread} instance using the values from {@link #init()}
+	 * @param r The {@link Runnable} to run.
+	 */
 	public PlaywrightThread(Runnable r) {
 		PlaywrightThreadInitPackage initPackage = init();
 		this.r = r;
@@ -58,23 +76,39 @@ public abstract class PlaywrightThread extends Thread {
 		}
 	}
 	
+	/**
+	 * Returns the {@link Playwright} instance of this thread.
+	 * @return The {@link Playwright} instance
+	 */
 	public final Playwright playwright() {
 		return playwright;
 	}
 	
+	/**
+	 * Returns the Chromium {@link Browser} instance of this thread.
+	 * @return The Chromium {@link Browser}
+	 * @throws NullPointerException If this implementation of {@link PlaywrightThread} does not utilise the Chromium browser.
+	 */
 	public final Browser chromium() {
-		Objects.requireNonNull(chromium, "The configuration of " + this.getClass().getName() + " does not use chromium.");
-		return chromium;
+		return Objects.requireNonNull(chromium, "The configuration of " + this.getClass().getName() + " does not use chromium.");
 	}
 	
+	/**
+	 * Returns the Firefox {@link Browser} instance of this thread.
+	 * @return The Firefox {@link Browser}
+	 * @throws NullPointerException If this implementation of {@link PlaywrightThread} does not utilise the Firefox browser.
+	 */
 	public final Browser firefox() {
-		Objects.requireNonNull(firefox, "The configuration of " + this.getClass().getName() + " does not use firefox.");
-		return firefox;
+		return Objects.requireNonNull(firefox, "The configuration of " + this.getClass().getName() + " does not use firefox.");
 	}
 	
+	/**
+	 * Returns the Webkit {@link Browser} instance of this thread.
+	 * @return The Webkit {@link Browser}
+	 * @throws NullPointerException If this implementation of {@link PlaywrightThread} does not utilise the Webkit browser.
+	 */
 	public final Browser webkit() {
-		Objects.requireNonNull(webkit, "The configuration of " + this.getClass().getName() + " does not use webkit.");
-		return webkit;
+		return Objects.requireNonNull(webkit, "The configuration of " + this.getClass().getName() + " does not use webkit.");
 	}
 	
 	
