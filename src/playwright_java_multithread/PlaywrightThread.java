@@ -3,7 +3,9 @@ package playwright_java_multithread;
 import java.util.Objects;
 
 import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType.LaunchOptions;
 import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.Playwright.CreateOptions;
 
 public abstract class PlaywrightThread extends Thread {
 	
@@ -14,9 +16,24 @@ public abstract class PlaywrightThread extends Thread {
 	private Runnable r;
 	
 	protected abstract PlaywrightThreadInitPackage init();
+	
+	@Internal
+	PlaywrightThreadInitPackage init(CreateOptions createOptions, LaunchOptions launchOptions) {
+		throw new UnsupportedOperationException(); // to be overriden by internal classes
+	}
 
-	protected PlaywrightThread(Runnable r) {
+	public PlaywrightThread(Runnable r) {
 		PlaywrightThreadInitPackage initPackage = init();
+		this.r = r;
+		this.playwright = initPackage.playwright();
+		this.chromium = initPackage.chromium();
+		this.firefox = initPackage.firefox();
+		this.webkit = initPackage.webkit();
+	}
+	
+	@Internal
+	PlaywrightThread(Runnable r, CreateOptions createOptions, LaunchOptions launchOptions) {
+		PlaywrightThreadInitPackage initPackage = init(createOptions, launchOptions);
 		this.r = r;
 		this.playwright = initPackage.playwright();
 		this.chromium = initPackage.chromium();

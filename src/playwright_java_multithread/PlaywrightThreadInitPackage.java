@@ -25,7 +25,7 @@ public final class PlaywrightThreadInitPackage {
 				throw new IllegalArgumentException("chromium : Expected Chromium browser! Received "
 													+ chromium.browserType().name() + " instead.");
 			}
-			if(firefox != null && firefox.browserType().name().equals("firefox")) {
+			if(firefox != null && !firefox.browserType().name().equals("firefox")) {
 				throw new IllegalArgumentException("firefox : Expected Firefox browser! Received "
 													+ firefox.browserType().name() + " instead.");
 			}
