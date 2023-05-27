@@ -1,4 +1,4 @@
-package playwright_java_multithread;
+package com.github.dennisochulor.playwright_java_multithread;
 
 import java.util.Objects;
 
@@ -29,7 +29,7 @@ public final class PlaywrightThreadInitPackage {
 	 */
 	public PlaywrightThreadInitPackage(Playwright playwright, Browser chromium, Browser firefox, Browser webkit) {		
 		try {
-			this.playwright = Objects.requireNonNull(playwright);
+			this.playwright = Objects.requireNonNull(playwright, "playwright");
 			
 			if(Objects.isNull(chromium) && Objects.isNull(firefox) && Objects.isNull(webkit)) {
 				throw new NullPointerException("At least one browser must be non-null!");

@@ -1,4 +1,4 @@
-package playwright_java_multithread;
+package com.github.dennisochulor.playwright_java_multithread;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
@@ -18,7 +18,7 @@ public final class PlaywrightThreadFactory implements ThreadFactory {
 	private final Class<? extends PlaywrightThread> clazz;
 	
 	private PlaywrightThreadFactory(Class<? extends PlaywrightThread> clazz) {
-		this.clazz = Objects.requireNonNull(clazz);
+		this.clazz = Objects.requireNonNull(clazz, "clazz");
 	}
 	
 	@Override
@@ -26,9 +26,17 @@ public final class PlaywrightThreadFactory implements ThreadFactory {
 		try {
 			return clazz.getConstructor(Runnable.class).newInstance(r);
 		} 
-		
-		catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+		catch (InstantiationException e) {
+			throw new RuntimeException("Cannot instantiate an abstract class!",e);
+		} 
+		catch (IllegalAccessException e) {
 			throw new RuntimeException(e);
+		}  
+		catch (InvocationTargetException e) {
+			throw new RuntimeException(e.getCause());
+		} 
+		catch (NoSuchMethodException e) {
+			throw new RuntimeException("Constuctor " + e.getLocalizedMessage() + " must be public!",e);
 		}	
 	}
 	

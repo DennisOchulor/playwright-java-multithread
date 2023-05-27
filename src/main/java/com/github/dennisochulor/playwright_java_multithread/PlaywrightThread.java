@@ -1,4 +1,4 @@
-package playwright_java_multithread;
+package com.github.dennisochulor.playwright_java_multithread;
 
 import java.util.Objects;
 
@@ -10,9 +10,14 @@ import com.microsoft.playwright.Playwright.CreateOptions;
 /**
  * 
  * This abstract class is a subclass of {@link Thread} that wraps {@link Playwright} and {@link Browser} directly onto a thread 
- * with the purpose of making it easier to multithread with Playwright as it is not thread-safe.
+ * with the purpose of making it easier to multithread with Playwright as it is not thread-safe. The {@link Playwright} and 
+ * {@link Browser} instances linked to an instance of this thread will be closed automatically when the thread terminates normally
+ * or exceptionally. <br><br>
+ * Default implementations of this class are provided via {@link PlaywrightThreadFactory} static methods. Users may optionally 
+ * choose to create a {@link PlaywrightThreadFactory#ofCustom(Class) custom implementation} of this class by extending it.
  * 
  * @see <a href="https://playwright.dev/java/docs/multithreading">Multithreading with Playwright</a>
+ * @see {@link PlaywrightThreadFactory}
  *
  */
 public abstract class PlaywrightThread extends Thread {

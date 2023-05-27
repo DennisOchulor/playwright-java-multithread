@@ -1,4 +1,4 @@
-package playwright_java_multithread;
+package com.github.dennisochulor.playwright_java_multithread;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
@@ -16,8 +16,8 @@ final class InternalPlaywrightThreadFactory implements ThreadFactory {
 
 	InternalPlaywrightThreadFactory(Class<? extends InternalPlaywrightThread> clazz,CreateOptions createOptions,LaunchOptions launchOptions) {
 		this.clazz = Objects.requireNonNull(clazz);
-		this.createOptions = Objects.requireNonNull(createOptions);
-		this.launchOptions = Objects.requireNonNull(launchOptions);
+		this.createOptions = Objects.requireNonNull(createOptions, "createOptions");
+		this.launchOptions = Objects.requireNonNull(launchOptions, "launchOptions");
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package playwright_java_multithread;
+package com.github.dennisochulor.playwright_java_multithread;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
