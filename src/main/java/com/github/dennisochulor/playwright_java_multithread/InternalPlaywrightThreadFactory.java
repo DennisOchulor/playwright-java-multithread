@@ -26,9 +26,17 @@ final class InternalPlaywrightThreadFactory implements ThreadFactory {
 			return clazz.getConstructor(Runnable.class,CreateOptions.class,LaunchOptions.class)
 						.newInstance(r,createOptions,launchOptions);
 		} 
-		
-		catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+		catch (InstantiationException e) {
+			throw new RuntimeException("Cannot instantiate an abstract class!",e);
+		} 
+		catch (IllegalAccessException e) {
 			throw new RuntimeException(e);
+		}  
+		catch (InvocationTargetException e) {
+			throw new RuntimeException(e.getCause());
+		} 
+		catch (NoSuchMethodException e) {
+			throw new RuntimeException("Constuctor " + e.getLocalizedMessage() + " must be public!",e);
 		}
 	}
 

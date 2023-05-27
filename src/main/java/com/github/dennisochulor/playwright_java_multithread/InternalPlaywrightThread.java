@@ -15,6 +15,6 @@ abstract class InternalPlaywrightThread extends PlaywrightThread {
 	}
 	
 	@Override
-	protected abstract PlaywrightThreadInitPackage init(CreateOptions createOptions, LaunchOptions launchOptions);
+	abstract PlaywrightThreadInitPackage init(CreateOptions createOptions, LaunchOptions launchOptions);
 	
 }

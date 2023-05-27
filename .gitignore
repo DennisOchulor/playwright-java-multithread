@@ -4,4 +4,3 @@ bin
 .project
 .env
 target
-test
