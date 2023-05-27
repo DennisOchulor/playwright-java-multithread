@@ -10,9 +10,11 @@ abstract class InternalPlaywrightThread extends PlaywrightThread {
 		super(r, createOptions, launchOptions);
 	}
 	
-
-	protected PlaywrightThreadInitPackage init() { 
-		throw new UnsupportedOperationException(); // subclasses will override init(CreateOptions, LaunchOptions)
+	protected PlaywrightThreadInitPackage init() {
+		throw new UnsupportedOperationException(); 
 	}
+	
+	@Override
+	protected abstract PlaywrightThreadInitPackage init(CreateOptions createOptions, LaunchOptions launchOptions);
 	
 }
