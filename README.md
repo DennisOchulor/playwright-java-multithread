@@ -11,7 +11,7 @@ Since Playwright isn't thread-safe, it is often difficult to multithread with it
 2. [PlaywrightThreadFactory](https://github.com/DennisOchulor/playwright-java-multithread/#playwrightthreadfactory)
 
 ## PlaywrightThread
-At the core of this library is the [PlaywrightThread](https://github.com/DennisOchulor/playwright-java-multithread/blob/main/src/main/java/com/github/dennisochulor/playwright_java_multithread/PlaywrightThread.java) which acts as an extension of the Java Thread class. It binds a Playwright instance and its corresponding Browsers directly onto a thread. Methods to access the underlying Playwright and Browsers instances are provided. The Playwright and Browsers instances will be closed automatically when the PlaywrightThread completed execution either normally or exceptionally.
+At the core of this library is the [PlaywrightThread](https://github.com/DennisOchulor/playwright-java-multithread/blob/main/src/main/java/com/github/dennisochulor/playwright_java_multithread/PlaywrightThread.java) which acts as an extension of the Java Thread class. It binds a Playwright instance and its corresponding Browsers directly onto a thread. Methods to access the underlying Playwright and Browsers instances are provided. The Playwright and Browsers instances will be closed automatically when the PlaywrightThread completes execution either normally or exceptionally.
 ```java
 public class PlaywrightThreadExample {
 
@@ -42,4 +42,44 @@ public class PlaywrightThreadExample {
 
 ### PlaywrightThreadFactory and the ExecutorService API
 PlaywrightThreadFactory is designed specifically to work well the Java's ExecutorService API which is commonly used in multithreading. Consider the example below.
+```java
+public class MultithreadingPlaywright {
+	
+	static final ExecutorService executor = Executors.newFixedThreadPool(5, PlaywrightThreadFactory.ofChromium());
 
+	public static void main(String[] args) throws Exception {
+		List<String> list = Files.readAllLines(Path.of("assets/QuadraticABCList.txt"));
+		
+		for(String formula : list) {
+			executor.execute( () -> {
+				PlaywrightThread playwrightThread = (PlaywrightThread) Thread.currentThread();
+				try(BrowserContext context = playwrightThread.chromium().newContext()) {
+					Page page = context.newPage();
+					page.navigate("https://dennisochulor.github.io/QuadraticStuff/");
+					page.click("#btnSolver");
+					
+					String[] arr = formula.split(",", 3);
+					String a = arr[0];
+					String b = arr[1];
+					String c = arr[2];
+					
+					page.fill("input[name=\"a\"]", a);
+					page.fill("input[name=\"b\"]", b);
+					page.fill("input[name=\"c\"]", c);
+					page.click("#btnSubmit");
+					page.screenshot(new ScreenshotOptions().setPath(Path.of("assets/" + a + " " + b + " " + c + ".png")));
+				}
+				catch(PlaywrightException e) { // avoids thread termination to allow the thread to be reused for subsequent tasks
+					e.printStackTrace();
+				}
+			});
+		}
+		
+		executor.shutdown();
+		executor.awaitTermination(5, TimeUnit.MINUTES);
+	}
+
+}
+```
+
+If `list.size()` is 100, 100 tasks would be submitted for execution but the `FixedThreadPoolExecutor` would only launch 5 PlaywrightThreads thus at most 5 tasks will run concurrently at any given time (which is good as launching 100 PlaywrightThreads would probably be too resource instensive). The max number of threads can be configured based on the capabilities of your machine. Each time a task completes, the executor does not terminate the PlaywrightThread but rather gives it another task to execute. This ensures no time and extra resources are wasted relaunching Playwright and Browser instances. The PlaywrightThreads will only terminate after `executor.shutdown()` is called and there are no pending tasks left (or if execution of a task throws an exception in which case the executor launches a new one).   
