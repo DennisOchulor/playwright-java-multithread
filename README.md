@@ -38,3 +38,8 @@ public class PlaywrightThreadExample {
 - `PlaywrightThreadFactory.ofChromium()` and `PlaywrightThreadFactory.ofChromium(CreateOptions, LaunchOptions)` creates PlaywrightThreads with only the Chromium browser
 - `PlaywrightThreadFactory.ofFirefox()` and `PlaywrightThreadFactory.ofFirefox(CreateOptions, LaunchOptions)` creates PlaywrightThreads with only the Firefox browser
 - `PlaywrightThreadFactory.ofWebkit()` and `PlaywrightThreadFactory.ofWebkit(CreateOptions, LaunchOptions)` creates PlaywrightThreads with only the Webkit browser
+- `PlaywrightThreadFactory.ofCustom(Class<? extends PlaywrightThread>)` creates custom user-defined PlaywrightThreads
+
+### PlaywrightThreadFactory and the ExecutorService API
+PlaywrightThreadFactory is designed specifically to work well the Java's ExecutorService API which is commonly used in multithreading. Consider the example below.
+
