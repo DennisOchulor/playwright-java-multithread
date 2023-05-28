@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 final class CustomPlaywrightThreadTest {
 	
 	@Test
-	void testCustomPlaywrightThreadWithoutOptions() throws Throwable {
+	void testCustomPlaywrightThread() throws Throwable {
 		ExecutorService executor = Executors.newSingleThreadExecutor(PlaywrightThreadFactory.ofCustom(CustomPlaywrightThread.class));
 		Runnable test = () -> {
 			PlaywrightThread t = (PlaywrightThread)(Thread.currentThread());
