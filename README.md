@@ -13,7 +13,7 @@ Since Playwright isn't thread-safe, it is often difficult to multithread with it
 4. [Download](https://github.com/DennisOchulor/playwright-java-multithread#download)
 
 ## PlaywrightThread
-At the core of this library is the [PlaywrightThread](https://github.com/DennisOchulor/playwright-java-multithread/blob/main/src/main/java/com/github/dennisochulor/playwright_java_multithread/PlaywrightThread.java) which acts as an extension of the Java Thread class. It binds a Playwright instance and its corresponding Browsers directly onto a thread. Methods to access the underlying Playwright and Browsers instances are provided. The Playwright and Browsers instances will be closed automatically when the PlaywrightThread completes execution either normally or exceptionally.
+At the core of this library is the [PlaywrightThread](https://github.com/DennisOchulor/playwright-java-multithread/blob/main/src/main/java/io/github/dennisochulor/playwright_java_multithread/PlaywrightThread.java) which acts as an extension of the Java Thread class. It binds a Playwright instance and its corresponding Browsers directly onto a thread. Methods to access the underlying Playwright and Browsers instances are provided. The Playwright and Browsers instances will be closed automatically when the PlaywrightThread completes execution either normally or exceptionally.
 ```java
 public class PlaywrightThreadExample {
 
@@ -35,7 +35,7 @@ public class PlaywrightThreadExample {
 ```
 
 ## PlaywrightThreadFactory
-[PlaywrightThreadFactory](https://github.com/DennisOchulor/playwright-java-multithread/blob/main/src/main/java/com/github/dennisochulor/playwright_java_multithread/PlaywrightThreadFactory.java) is an implementation of Java's ThreadFactory interface which produces PlaywrightThreads. This is the main way users will use this library. PlaywrightThreadFactory contains several useful static factory methods, they are:
+[PlaywrightThreadFactory](https://github.com/DennisOchulor/playwright-java-multithread/blob/main/src/main/java/io/github/dennisochulor/playwright_java_multithread/PlaywrightThreadFactory.java) is an implementation of Java's ThreadFactory interface which produces PlaywrightThreads. This is the main way users will use this library. PlaywrightThreadFactory contains several useful static factory methods, they are:
 - `PlaywrightThreadFactory.ofDefault()` and `PlaywrightThreadFactory.ofDefault(CreateOptions, LaunchOptions)` creates PlaywrightThreads with all three browsers
 - `PlaywrightThreadFactory.ofChromium()` and `PlaywrightThreadFactory.ofChromium(CreateOptions, LaunchOptions)` creates PlaywrightThreads with only the Chromium browser
 - `PlaywrightThreadFactory.ofFirefox()` and `PlaywrightThreadFactory.ofFirefox(CreateOptions, LaunchOptions)` creates PlaywrightThreads with only the Firefox browser
