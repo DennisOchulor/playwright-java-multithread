@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.github.dennisochulor.playwright_java_multithread;
+package io.github.dennisochulor.playwright_java_multithread;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;

@@ -22,31 +22,26 @@
  * SOFTWARE.
  */
 
-package com.github.dennisochulor.playwright_java_multithread;
+package io.github.dennisochulor.playwright_java_multithread;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType.LaunchOptions;
+import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.Playwright.CreateOptions;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+@Internal
+final class WebkitPlaywrightThread extends InternalPlaywrightThread {
 
-final class CustomPlaywrightThreadTest {
-	
-	@Test
-	void testCustomPlaywrightThread() throws Throwable {
-		ExecutorService executor = Executors.newSingleThreadExecutor(PlaywrightThreadFactory.ofCustom(CustomPlaywrightThread.class));
-		Runnable test = () -> {
-			PlaywrightThread t = (PlaywrightThread)(Thread.currentThread());
-			Assertions.assertNotNull(t.playwright());
-			Assertions.assertEquals(t.chromium().browserType().name(), "chromium");
-			Assertions.assertThrowsExactly(NullPointerException.class, () -> t.firefox());
-			Assertions.assertEquals(t.webkit().browserType().name(), "webkit");
-		};
-		
-		executor.submit(test).get();
-		executor.shutdown();
-		executor.awaitTermination(1, TimeUnit.MINUTES);
+	public WebkitPlaywrightThread(Runnable r, CreateOptions createOptions, LaunchOptions launchOptions) {
+		super(r, createOptions, launchOptions);
 	}
 	
+	
+	@Override
+	PlaywrightThreadInitPackage init(CreateOptions createOptions, LaunchOptions launchOptions) {
+		Playwright playwright = Playwright.create(createOptions);
+		Browser webkit = playwright.webkit().launch(launchOptions);
+		return new PlaywrightThreadInitPackage(playwright, null, null, webkit);
+	}
+
 }

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.github.dennisochulor.playwright_java_multithread;
+package io.github.dennisochulor.playwright_java_multithread;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,17 +34,17 @@ import org.junit.jupiter.api.Test;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
 import com.microsoft.playwright.Playwright.CreateOptions;
 
-final class DefaultPlaywrightThreadTest {
-	
+final class WebkitPlaywrightThreadTest {
+
 	@Test
-	void testDefaultPlaywrightThreadWithoutOptions() throws Throwable {
-		ExecutorService executor = Executors.newSingleThreadExecutor(PlaywrightThreadFactory.ofDefault());
+	void testWebkitPlaywrightThreadWithoutOptions() throws Throwable {
+		ExecutorService executor = Executors.newSingleThreadExecutor(PlaywrightThreadFactory.ofWebkit());
 		Runnable test = () -> {
 			PlaywrightThread t = (PlaywrightThread)(Thread.currentThread());
 			Assertions.assertNotNull(t.playwright());
-			Assertions.assertEquals(t.chromium().browserType().name(), "chromium");
-			Assertions.assertEquals(t.firefox().browserType().name(), "firefox");
 			Assertions.assertEquals(t.webkit().browserType().name(), "webkit");
+			Assertions.assertThrowsExactly(NullPointerException.class, () -> t.firefox());
+			Assertions.assertThrowsExactly(NullPointerException.class, () -> t.chromium());
 		};
 		
 		executor.submit(test).get();
@@ -53,14 +53,14 @@ final class DefaultPlaywrightThreadTest {
 	}
 	
 	@Test
-	void testDefaultPlaywrightThreadWithOptions() throws Throwable {
-		ExecutorService executor = Executors.newSingleThreadExecutor(PlaywrightThreadFactory.ofDefault(new CreateOptions(),new LaunchOptions()));
+	void testWebkitPlaywrightThreadWithOptions() throws Throwable {
+		ExecutorService executor = Executors.newSingleThreadExecutor(PlaywrightThreadFactory.ofWebkit(new CreateOptions(),new LaunchOptions()));
 		Runnable test = () -> {
 			PlaywrightThread t = (PlaywrightThread)(Thread.currentThread());
 			Assertions.assertNotNull(t.playwright());
-			Assertions.assertEquals(t.chromium().browserType().name(), "chromium");
-			Assertions.assertEquals(t.firefox().browserType().name(), "firefox");
 			Assertions.assertEquals(t.webkit().browserType().name(), "webkit");
+			Assertions.assertThrowsExactly(NullPointerException.class, () -> t.firefox());
+			Assertions.assertThrowsExactly(NullPointerException.class, () -> t.chromium());
 		};
 		
 		executor.submit(test).get();

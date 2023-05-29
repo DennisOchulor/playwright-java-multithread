@@ -22,22 +22,23 @@
  * SOFTWARE.
  */
 
-package com.github.dennisochulor.playwright_java_multithread;
+package io.github.dennisochulor.playwright_java_multithread;
 
-import static java.lang.annotation.ElementType.CONSTRUCTOR;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.SOURCE;
+import com.microsoft.playwright.BrowserType.LaunchOptions;
+import com.microsoft.playwright.Playwright.CreateOptions;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+@Internal
+abstract class InternalPlaywrightThread extends PlaywrightThread {
 
-@Retention(SOURCE)
-@Target({ TYPE, METHOD, CONSTRUCTOR })
-/**
- * 
- * Anything annotated with this annotation is intended only for <b>**internal use**</b> only.
- * Users are highly discouraged from directly using these internal components outside their packages.
- *
- */
-@interface Internal {}
+	public InternalPlaywrightThread(Runnable r, CreateOptions createOptions, LaunchOptions launchOptions) {
+		super(r, createOptions, launchOptions);
+	}
+	
+	protected PlaywrightThreadInitPackage init() {
+		throw new UnsupportedOperationException(); 
+	}
+	
+	@Override
+	abstract PlaywrightThreadInitPackage init(CreateOptions createOptions, LaunchOptions launchOptions);
+	
+}
