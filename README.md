@@ -9,7 +9,7 @@ Since Playwright isn't thread-safe, it is often difficult to multithread with it
 ## Summary
 1. [PlaywrightThread](https://github.com/DennisOchulor/playwright-java-multithread#playwrightthread)
 2. [PlaywrightThreadFactory](https://github.com/DennisOchulor/playwright-java-multithread#playwrightthreadfactory)
-3. [Custom PlaywrightThread](https://github.com/DennisOchulor/playwright-java-multithread#custom-playwrightthread)
+3. [Custom PlaywrightThreads](https://github.com/DennisOchulor/playwright-java-multithread#custom-playwrightthreads)
 4. [Download](https://github.com/DennisOchulor/playwright-java-multithread#download)
 
 ## PlaywrightThread
