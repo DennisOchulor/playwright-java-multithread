@@ -129,6 +129,6 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.dennisochulor:playwright-java-multithread:1.0.0")
+    implementation group: 'io.github.dennisochulor', name: 'playwright-java-multithread', version: '1.0.0'
 }
 ```
