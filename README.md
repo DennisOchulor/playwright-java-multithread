@@ -112,4 +112,23 @@ ExecutorService executor = Executors.newFixedThreadPool(5, PlaywrightThreadFacto
 ```
 
 ## Download
-playwright-java-multithread requires Java 8+ and [Playwright Java](https://github.com/microsoft/playwright-java) v1.23.0 or higher.
+playwright-java-multithread requires Java 8+ and [Playwright Java](https://github.com/microsoft/playwright-java) v1.23.0 or higher. It is recommended to use the latest version of Playwright Java if possible.
+### Maven
+```xml
+<dependency>
+	<groupId>io.github.dennisochulor</groupId>
+	<artifactId>playwright-java-multithread</artifactId>
+	<version>1.0.0</version>
+</dependency>
+```
+
+### Gradle
+```gradle
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("io.github.dennisochulor:playwright-java-multithread:1.0.0")
+}
+```
