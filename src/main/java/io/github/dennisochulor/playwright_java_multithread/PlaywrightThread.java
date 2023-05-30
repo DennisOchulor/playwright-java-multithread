@@ -41,7 +41,7 @@ import com.microsoft.playwright.Playwright.CreateOptions;
  * choose to create a {@link PlaywrightThreadFactory#ofCustom(Class) custom implementation} of this class by extending it.
  * 
  * @see <a href="https://playwright.dev/java/docs/multithreading">Multithreading with Playwright</a>
- * @see {@link PlaywrightThreadFactory}
+ * @see PlaywrightThreadFactory
  *
  */
 public abstract class PlaywrightThread extends Thread {

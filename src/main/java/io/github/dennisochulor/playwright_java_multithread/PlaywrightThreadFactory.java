@@ -156,7 +156,7 @@ public final class PlaywrightThreadFactory implements ThreadFactory {
 	 * Returns a {@link ThreadFactory} that produces custom user-defined {@link PlaywrightThread}s.
 	 * Custom {@link PlaywrightThread}s can be created by extending the {@link PlaywrightThread} class. For example:
 	 * 
-	 * <pre><blockQuotes>
+	 * <pre>
 	 * public class CustomPlaywrightThread extends PlaywrightThread {
      *
 	 *	public CustomPlaywrightThread(Runnable r) {
@@ -175,7 +175,7 @@ public final class PlaywrightThreadFactory implements ThreadFactory {
 	 *	}
      *
 	 *}
-	 * </pre></blockQuotes>
+	 * </pre>
 	 * 
 	 * @param clazz The user-defined {@link PlaywrightThread} class literal e.g. {@code CustomPlaywrightThread.class}
 	 * @return The {@link ThreadFactory} as described above.
